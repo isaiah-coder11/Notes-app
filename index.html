@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111310">
+    <title>Fieldnotes — your thinking, in one place</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Stuff.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="Fieldnotes home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span>fieldnotes<span class="brand-period">.</span></span>
+        </a>
+
+        <button class="new-topic-button" id="new-topic-button" type="button">
+          <span class="plus-icon">+</span>
+          <span>New topic</span>
+          <span class="shortcut">⌘ N</span>
+        </button>
+
+        <div class="sidebar-section">
+          <div class="section-label">YOUR WORKSPACE <span id="topic-count">0</span></div>
+          <nav class="topic-list" id="topic-list" aria-label="Topics"></nav>
+          <div class="empty-topics" id="empty-topics">
+            <span class="empty-dot"></span>
+            Your topics will live here.
+          </div>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="privacy-note"><span class="privacy-icon">◈</span><span>Your files stay yours.<br><b>Stored on this device.</b></span></div>
+          <button class="settings-button" id="settings-button" type="button">
+            <span class="settings-icon">⚙</span> AI settings
+            <span class="settings-status" id="settings-status">Not connected</span>
+          </button>
+          <div class="profile-row">
+            <div class="avatar">F</div>
+            <div><strong>My workspace</strong><small>Personal space</small></div>
+            <span class="profile-menu">•••</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="breadcrumb-topic">Overview</strong></div>
+          <div class="topbar-right">
+            <span class="saved-indicator"><span></span> All changes saved</span>
+            <button class="help-button" type="button" aria-label="About Fieldnotes" title="Your content is stored in this browser. AI summaries are sent to OpenRouter.">?</button>
+          </div>
+        </header>
+
+        <section class="welcome-screen" id="welcome-screen">
+          <div class="welcome-orbit orbit-one"></div><div class="welcome-orbit orbit-two"></div>
+          <div class="welcome-content">
+            <div class="eyebrow"><span class="eyebrow-line"></span> A LITTLE MORE CLARITY</div>
+            <h1>Good thinking<br>starts <em>somewhere.</em></h1>
+            <p>Bring your files together under a topic. Get the big picture, keep the details, and leave yourself a note for next time.</p>
+            <button class="primary-button" id="welcome-create-button" type="button">Create your first topic <span>↗</span></button>
+            <div class="welcome-footnote"><span class="mini-lock">◈</span> Private by default · Nothing leaves your device unless you ask AI to summarize</div>
+          </div>
+          <div class="welcome-art" aria-hidden="true">
+            <div class="art-card back-card"><span class="art-file-icon green">▤</span><span class="art-lines"><i></i><i></i><i></i></span></div>
+            <div class="art-card front-card"><span class="art-card-top"><span class="art-file-icon orange">✳</span><span>FIELD NOTES / 01</span></span><strong>A place for<br>the pieces.</strong><span class="art-lines"><i></i><i></i></span></div>
+            <span class="sparkle sparkle-a">✳</span><span class="sparkle sparkle-b">✳</span>
+            <span class="art-caption">COLLECT · CONNECT · KEEP</span>
+          </div>
+        </section>
+
+        <section class="topic-screen hidden" id="topic-screen">
+          <div class="topic-heading">
+            <div class="topic-title-block">
+              <div class="eyebrow"><span class="eyebrow-line"></span> YOUR TOPIC</div>
+              <div class="title-line"><h1 id="topic-title">Untitled topic</h1><button class="icon-button rename-button" id="rename-button" type="button" aria-label="Rename topic" title="Rename topic">↗</button></div>
+              <div class="topic-meta"><span id="topic-file-count">0 files</span><span class="meta-dot">·</span><span id="topic-updated">Just created</span></div>
+            </div>
+            <div class="topic-actions">
+              <button class="secondary-button" id="add-files-button" type="button"><span>＋</span> Add files</button>
+              <button class="primary-button summarize-button" id="summarize-button" type="button"><span class="sparkle-small">✳</span> Summarize <span>↗</span></button>
+            </div>
+          </div>
+
+          <div class="workspace-grid">
+            <div class="left-column">
+              <section class="panel files-panel">
+                <div class="panel-heading">
+                  <div><span class="panel-kicker">THE COLLECTION</span><h2>Files &amp; folders</h2></div>
+                  <button class="text-button" id="browse-files-button" type="button">Browse all <span>→</span></button>
+                </div>
+                <div class="dropzone" id="dropzone">
+                  <div class="upload-glyph"><span>↑</span></div>
+                  <div><strong>Drop anything in here</strong><p>Or <button id="dropzone-browse" type="button">choose files</button> from your computer</p></div>
+                  <span class="dropzone-hint">FILES OR FOLDERS</span>
+                </div>
+                <div class="file-list" id="file-list"></div>
+                <div class="empty-files" id="empty-files">
+                  <div class="empty-files-icon">⌁</div>
+                  <strong>A topic takes shape with its first file.</strong>
+                  <span>Add notes, docs, or a whole folder to get started.</span>
+                </div>
+                <div class="file-footer"><span><i class="status-dot"></i> Files are saved locally in this browser</span><span class="supported-note">TXT · MD · CSV · JSON · CODE</span></div>
+              </section>
+
+              <section class="panel commentary-panel">
+                <div class="panel-heading">
+                  <div><span class="panel-kicker">YOUR OWN WORDS</span><h2>Commentary <span class="comment-count" id="comment-count">0</span></h2></div>
+                  <span class="commentary-mark">✳</span>
+                </div>
+                <p class="commentary-intro">A thought, a question, a reminder to future-you. This space is yours.</p>
+                <form id="comment-form" class="comment-form">
+                  <label class="sr-only" for="comment-input">Write a commentary note</label>
+                  <textarea id="comment-input" rows="2" maxlength="1200" placeholder="What stands out to you?"></textarea>
+                  <div class="comment-form-bottom"><span id="comment-hint">Only you can see these notes.</span><button type="submit" class="comment-submit">Add note <span>↗</span></button></div>
+                </form>
+                <div class="comment-list" id="comment-list"></div>
+              </section>
+            </div>
+
+            <aside class="panel summary-panel">
+              <div class="summary-heading">
+                <div><span class="panel-kicker">THE BIG PICTURE</span><h2>AI summary</h2></div>
+                <span class="ai-orb">✳</span>
+              </div>
+              <div id="summary-empty" class="summary-empty">
+                <div class="summary-illustration"><span class="summary-spark">✳</span><span class="summary-page page-back"></span><span class="summary-page page-front"></span></div>
+                <strong>The thread will find itself.</strong>
+                <p>Add a few files, then let AI connect the dots and pull out what matters.</p>
+                <button class="text-button summary-setup-link" id="summary-setup-link" type="button">Set up AI first <span>→</span></button>
+              </div>
+              <div id="summary-loading" class="summary-loading hidden"><span class="loader"></span><strong>Finding the throughline…</strong><p>Reading your files and looking for what connects.</p></div>
+              <div id="summary-result" class="summary-result hidden"></div>
+              <div id="summary-error" class="summary-error hidden" role="alert"></div>
+              <div class="summary-footer"><span><span class="ai-footer-dot">✳</span> Powered by OpenRouter</span><button id="change-model-button" type="button">Change model</button></div>
+            </aside>
+          </div>
+        </section>
+
+        <footer class="page-footer"><span>FIELDNOTES <i>·</i> A calmer way to collect your thoughts.</span><span>MADE FOR THE IN-BETWEEN MOMENTS <b>✳</b></span></footer>
+      </main>
+    </div>
+
+    <input id="file-input" type="file" multiple hidden>
+    <input id="folder-input" type="file" webkitdirectory multiple hidden>
+
+    <div class="modal-backdrop hidden" id="topic-modal" role="presentation">
+      <form class="modal-card" id="topic-form" role="dialog" aria-modal="true" aria-labelledby="topic-modal-title">
+        <button class="modal-close" type="button" data-close="topic-modal" aria-label="Close">×</button>
+        <span class="modal-icon">✳</span><span class="panel-kicker">A FRESH START</span>
+        <h2 id="topic-modal-title">What are we thinking about?</h2><p>Give this collection a name. You can always change it later.</p>
+        <label for="topic-name-input">TOPIC NAME</label><input id="topic-name-input" type="text" maxlength="80" placeholder="e.g. Spring research, Book ideas…" required>
+        <div class="modal-actions"><button type="button" class="modal-cancel" data-close="topic-modal">Not now</button><button class="primary-button" type="submit">Create topic <span>↗</span></button></div>
+      </form>
+    </div>
+
+    <div class="modal-backdrop hidden" id="settings-modal" role="presentation">
+      <form class="modal-card settings-modal-card" id="settings-form" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+        <button class="modal-close" type="button" data-close="settings-modal" aria-label="Close">×</button>
+        <span class="modal-icon">✳</span><span class="panel-kicker">YOUR AI, YOUR CHOICE</span>
+        <h2 id="settings-modal-title">Connect an AI model</h2><p>Fieldnotes uses OpenRouter to summarize your files. Your key is kept in this browser and sent only to OpenRouter when you request a summary.</p>
+        <label for="api-key-input">OPENROUTER API KEY</label><input id="api-key-input" type="password" autocomplete="off" placeholder="sk-or-…" spellcheck="false">
+        <label for="model-input">MODEL <span class="label-help">Use any model available on OpenRouter</span></label><input id="model-input" type="text" value="openai/gpt-4o-mini" placeholder="provider/model">
+        <a class="api-key-link" href="https://openrouter.ai/keys" target="_blank" rel="noreferrer">Get an API key at openrouter.ai <span>↗</span></a>
+        <div class="settings-disclaimer">File contents are sent to the selected model only when you click Summarize. Avoid including sensitive information.</div>
+        <div class="modal-actions settings-actions"><button class="disconnect-button hidden" id="disconnect-button" type="button">Remove key</button><button type="button" class="modal-cancel" data-close="settings-modal">Cancel</button><button class="primary-button" type="submit">Save settings <span>↗</span></button></div>
+      </form>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="Java.js"></script>
+  </body>
+</html>
